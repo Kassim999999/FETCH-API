@@ -38,11 +38,13 @@ function displayProducts(products) {
             <div>$ ${product.price}</div>
             <div id= "buttons">
             <button class= " one update">Update</button>
-            <button class= "one delete">Delete</button>
+            <button id="delete-button" class= "one delete" onclick= "deleteProduct(${product.id})">Delete</button>
             </div>
         </div>`
 
+        
         product_catalog.innerHTML += html
+        
     });
     
 }
@@ -59,8 +61,20 @@ function displayProducts(products) {
 // .then(data)
 // .catch(display error message if it is there)
 
-function deleteProduct(product) {
+function deleteProduct(product_id) {
     
+    fetch(`${base_url}/${product_id}`,{
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+})
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+
+
+  
 }
 
 function updateProduct(product) {
@@ -101,7 +115,19 @@ function updateProduct(product) {
     })
 
 
-   
+function deleteProduct(product_id) {
+    fetch(`${base_url}/${product_id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(data => console.log(data)
+    )
+    .catch(err => console.log(err)
+    )
+}
 
 
 
@@ -159,4 +185,16 @@ fetch(`${base_url}/${id}`, {
 //     UPDATE(patch)
 //     DELETE
 
+// post && patch
+// fetch(url, {method: "post",
+//      headers: {
+//         "Content-Type": "application/json"}, 
+//         body: JSON.stringify()})
 
+// .then(res => res.json())
+
+// .then(data => displayProducts(data))
+
+// fetch(url, {method: "patch",
+//      headers: {"Content-Type": "application/json"},
+//       body: JSON.stringify()})
